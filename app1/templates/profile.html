@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+  <!-- <div class="container">
+    <div class="row">
+      <div class="col-sm-6">
+        <h5 class="alert alert-info text-center mt-2 ">Add Shipping address</h5>
+        <form action="" method="POST" novalidate class="shadow p-5">
+          {% csrf_token %}
+          {{form|crispy}} <br>
+          <input type="submit" class="btn btn-primary bt" value="Add">
+        </form>
+      </div>
+
+ <div class="col-sm-6">
+  <h5 class="alert alert-primary text-center mt-2">Your shipping address</h5>
+  <div class="container my-5">
+    <div class="row">
+    
+     {% for i in add %}
+      <div class="col-sm-6">
+      <div class="card">
+       <div class="card-body">
+        <h3>Address {{forloop.counter}}</h3>
+        <p>Name: {{i.name}}</p>
+        <p>Location:{{i.location}}</p>
+        <p>Distric: {{i.distric}}</p>
+        <p>division: {{i.division}}</p>
+        <p>Zipcode: {{i.zipcode}}</p>
+       </div>
+      </div>
+     </div>
+     {% endfor %}
+     
+    </div>
+   </div>
+ </div>
+
+
+
+
+    </div>
+  </div>-->
+{% endblock content %} 

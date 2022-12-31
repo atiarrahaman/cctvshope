@@ -1,0 +1,27 @@
+.focused{
+	outline: 0 !important;
+    box-shadow: 0 0 0 0.2rem rgb(0 123 255 / 25%) !important;
+}
+
+.errorlist li{
+	color: red;
+}
+a{
+	text-decoration: none;
+}
+.img img{
+	width:250px;
+	height: 200px;
+	
+	
+}
+
+.float-right{
+	float: right;
+}
+
+
+form .bt{
+	width: 100%;
+	text-align: center;
+}

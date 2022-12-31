@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+  <div class="card-body">
+   
+   <h3>Order</h3>
+   {% for cart in order %}
+   <div class="row">
+       <div class="col-sm-3 text-center align-self-center"><img src="{{cart.product.img.url}}" alt="" srcset="" class="img-fluid img-thumbnail shadow-sm" height="150" width="150"> </div>
+       <div class="col-sm-9">
+        <div>
+         <h5>{{cart.product.name}}</h5>
+         <p class="mb-0 float-right"><span><strong>Status : <span class="text-warning">{{cart.status}}</span></strong></span></p>
+         <div class="my-3">
+          <label for="quantity">Quantity:</label>
+          <span id="quantity">{{cart.quantity }}</span>
+    
+         </div> 
+         <div class="d-flex justify-content-between">
+          
+          <p class="mb-0"><span><strong>SR {{cart.product.price}}</strong></span></p>
+          
+          
+          
+         </div>
+        </div>
+       </div>
+      </div>
+      <hr class="text-muted">
+   {% endfor %}
+
+
+   
+   
+  </div>
+</div>
+{% endblock content %}

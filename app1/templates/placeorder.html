@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container">
+    <div class="row mt-5">
+     <div class="col-sm-6">
+       <h4>Order Summary</h4>
+       <hr>
+         {% for i  in order_place %}
+         <div class="card mb-2">
+            <div class="card-body">
+              <h5>Product:{{i.product.name}}</h5>
+              <p>Quantity: {{i.quantity}}</p>
+              <p class="fw-bold">Price: SR {{i.product.price}}</p>
+              <p class="fw-bold">Gross: SR {{i.cart_total}}</p>
+              
+              
+            </div>
+          </div>
+         {% endfor %}
+         <p class="fw-bold">Total Amount + Shipping 20.0 ={{totalamount}} </p>
+       <small>Term and Condition: Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia, ullam saepe! Iure optio repellat dolor velit, minus rem. Facilis cumque neque numquam laboriosam, accusantium adipisci nisi nihil in et quis?</small>
+     </div>
+     <div class="col-sm-4 offset-sm-1">
+      {% if add %}
+       <h4>Shipping Address</h4>
+       <hr>
+      
+       <form action="/order-done" id="form">
+       {% for i in add %}
+        <div class="card">
+          <div class="card-body">
+          <h5>{{i.name}}</h5>
+          <p>{{i.location}}</p>
+          <p>{{i.distric}}</p>
+          <p>{{i.zipcode}}</p>
+          <span><a href="{% url 'delete' i.id %}" class="btn btn-danger">Delete</a></span>
+          <span><a href="{% url 'edit' i.id %}"  class="btn btn-warning" >Edit</a></span>
+         </div>
+        </div>
+        <input type="hidden" name="adid" id="adid" value="{{i.id}}">
+       {% endfor %}
+        
+        
+          <div class="text-end">
+            <div id="paypal-button-container"></div>
+          </div>
+        </form>
+        
+      {%else%}
+        
+        <h5 class="alert alert-info text-center mt-2 ">Add Shipping address</h5>
+        <hr>
+        <form action="" method="POST" novalidate class="shadow p-5">
+          {% csrf_token %}
+          {{form|crispy}} <br>
+          <input type="submit" class="btn btn-primary bt" value="Add">
+        </form>
+       <!-- Set up a container element for the button -->
+        
+      {% endif %}
+
+
+       
+       </div>
+     </div>
+   </div>
+
+  
+
+
+
+  
+
+   <!-- Include the PayPal JavaScript SDK -->
+   <script src="https://www.paypal.com/sdk/js?client-id=AU2kqO8ae43qQEkZJxbg3Ms7v1F651UN8CtWzdhK4akgwA_KsIPEhOtpV8XXDntPiMEA3dGoJoaZL-5w&currency=USD"></script>
+
+   <script>
+       // Render the PayPal button into #paypal-button-container
+       paypal.Buttons({
+
+           // Set up the transaction
+           createOrder: function(data, actions) {
+               return actions.order.create({
+                   purchase_units: [{
+                       amount: {
+                           value: '{{totalamount}}'
+                       }
+                   }]
+               });
+           },
+
+           // Finalize the transaction
+           onApprove: function(data, actions) {
+               return actions.order.capture().then(function(orderData) {
+                   // Successful capture! For demo purposes:
+                   console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+                   var transaction = orderData.purchase_units[0].payments.captures[0];
+                   alert('Transaction '+ transaction.status + ': ' + transaction.id + '\n\nSee console for all available details');
+                   document.getElementById("form").submit();
+                   // Replace the above to show a success message within this page, e.g.
+                   // const element = document.getElementById('paypal-button-container');
+                   // element.innerHTML = '';
+                   // element.innerHTML = '<h3>Thank you for your payment!</h3>';
+                   // Or go to another URL:  actions.redirect('thank_you.html');
+               });
+           }
+
+
+       }).render('#paypal-button-container');
+   </script>
+  
+{% endblock content %}
+
+

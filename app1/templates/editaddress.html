@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container">
+    <div class="row mt-5">
+      
+     <div class="col-sm-8 offset-sm-1">
+       <h5 class="alert alert-info text-center mt-2 ">Edit Shipping address</h5>
+        <hr>
+        <form action="" method="POST" novalidate class="shadow p-5">
+          {% csrf_token %}
+          {{forms|crispy}} <br>
+          <input type="submit" class="btn btn-primary bt" value="Save">
+          <a href="{% url 'place-order' %}" class="btn btn-warning bt my-2">back</a>
+        </form>
+        
+      
+      
+
+
+       
+       </div>
+     </div>
+   </div>
+
+  
+  
+{% endblock content %}
