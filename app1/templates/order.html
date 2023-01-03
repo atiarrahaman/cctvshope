@@ -11,15 +11,37 @@
        <div class="col-sm-9">
         <div>
          <h5>{{cart.product.name}}</h5>
-         <p class="mb-0 float-right"><span><strong>Status : <span class="text-warning">{{cart.status}}</span></strong></span></p>
+          
+  <div class="progress " style="width: 250px;">
+    {% if cart.status == 'accepted' %}
+        <div class="progress-bar bg-info" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">accept</div>
+    {% elif cart.status == 'packed' %}
+      <div class="progress-bar bg-info" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">accept</div>
+      <div class="progress-bar bg-primary" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">packed</div>
+    {% elif cart.status == 'on the way' %}
+      <div class="progress-bar bg-info" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">accept</div>
+      <div class="progress-bar bg-primary" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">packed</div>
+      <div class="progress-bar bg-warning" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">on the  way</div>
+    {% elif cart.status == 'delivered ' %}
+      <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" >Success</div>
+
+    {% elif cart.status == 'cancel' %}
+      <div class="progress-bar bg-danger" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">cancel</div>
+    {% else%}
+      <div class="progress-bar bg-warning" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" value="panding">pandding</div>
+
+  {% endif %}
+</div>
+          
          <div class="my-3">
           <label for="quantity">Quantity:</label>
           <span id="quantity">{{cart.quantity }}</span>
     
          </div> 
-         <div class="d-flex justify-content-between">
+         <div class="">
           
           <p class="mb-0"><span><strong>SR {{cart.product.price}}</strong></span></p>
+          <p class="mb-0"><span><strong>Gross: {{cart.cart_total}}</strong></span></p>
           
           
           

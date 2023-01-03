@@ -85,7 +85,7 @@ Status={
     ('accepted','accepted'),
     ('packed','packed'),
     ('on the way','on the way'),
-   ( 'delivered ','delivered ')
+   ( 'delivered ','delivered')
 
 }
 
@@ -99,4 +99,6 @@ class PlaceOrder(models.Model):
     order_date= models.DateTimeField(auto_now_add=True)
     status= models.CharField(choices=Status, max_length=50,default='Pending')
 
-    
+    @property
+    def cart_total(self):
+     return self.quantity * self.product.price

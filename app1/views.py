@@ -7,6 +7,7 @@ from django.db.models import Q
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from django.core.paginator import Paginator
 
 
 # Create your views here.
@@ -61,11 +62,19 @@ def Profile(request):
         return redirect('login')
 
 
-
 def Home(request):
-    data= CcTvProduct.objects.all().order_by('-id')
-
-    context={'data':data,}
+    if 'q' in request.GET:
+            q=request.GET['q']
+            multiple_q= Q(Q(name__iexact=q)| Q(mp__mp__iexact=q)|Q(
+            catagory__title__iexact=q)|Q(brand__title__iexact=q)|Q(
+            size__size__iexact=q))
+            data=CcTvProduct.objects.filter(multiple_q)
+    else:
+         data= CcTvProduct.objects.all().order_by('-id')
+    paginator = Paginator(data, 6) # Show 25 contacts per page.
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number) 
+    context={'data':data,'page_obj':page_obj}
     return render(request,'home.html',context)
 
 
@@ -102,6 +111,7 @@ def Show_cart(request):
     if request.user.is_authenticated:
         user=request.user
         cart=Cart.objects.filter(user=user).order_by('-id')
+        a=Cart.objects.filter(user=user).order_by('-id').all().count()
         amount=0.0
         shipinamounnt=20.0
         totalamount=0.0
@@ -111,7 +121,7 @@ def Show_cart(request):
                 tempamount=(p.quantity * p.product.price)
                 amount+=tempamount
                 totalamount= amount+shipinamounnt
-        context={'carts':cart,'totalamount':totalamount,'amount':amount,}
+        context={'carts':cart,'totalamount':totalamount,'amount':amount,'a':a}
         return render(request,'productcart.html',context)
     else:
         return redirect('login')
@@ -253,3 +263,23 @@ def Order(request):
     order=PlaceOrder.objects.filter(user=request.user).order_by('-id')
     context={'order':order}
     return render(request,'order.html',context)
+
+
+
+def Brands(request):
+    brands= Brand.objects.all()
+    alldata= CcTvProduct.objects.all()
+    branddata=request.GET.get('branddata')
+    data=CcTvProduct.objects.filter(brand__title=branddata)
+    context={'brands':brands,'data':data,'alldata':alldata}
+    return render(request,'brand.html',context)
+
+def Catagorydata(request):
+    catagory=Catagory.objects.all()
+    alldata=CcTvProduct.objects.all()
+    catagorydata=request.GET.get('catagorydata')
+    catagoryfilterdata=CcTvProduct.objects.filter(catagory__title=catagorydata)
+
+    context={'catagory':catagory,'cfdata':catagoryfilterdata,'alldata':alldata}
+    return render(request,'catagory.html',context)
+

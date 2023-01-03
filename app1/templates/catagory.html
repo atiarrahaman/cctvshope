@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row">
+      <h3>Catagory data</h3>
+        <hr>
+     <div class="col-sm-3">
+      <div class="list-group" >
+        {% for catagory in catagory %}
+         <form action="">
+            {% csrf_token %}
+           <input type="submit" name="catagorydata" id="catagorydata" value="{{catagory.title}}" class="list-group-item list-group-item-action " id="list-profile-list" data-toggle="list">
+        </form>
+        {% endfor %}
+      </div>
+     </div>
+
+     <div class="col-sm-8 offset-sm-1">
+       <div class="row">
+      {% if cfdata %}
+      {% for cfdata in cfdata %}
+      <div class="col-sm-6  ">
+			 <div class="card shadow">
+        <div class="text-center img">
+          <p class="alert alert-success text-center">Your result:{{cfdata.catagory.title}}</p>
+          <a href="{% url 'productdetails' cfdata.id %}"><img src="{{cfdata.img.url}}" class="text-center" alt=""></a>
+			 </div>
+
+       <div class="card-body">
+			    <h5 class="card-text"><a href="{% url 'productdetails' cfdata.id %}">{{cfdata.name}}</a></h5>
+          <span>$ {{cfdata.price}}</span> <span class="float-right">{{cfdata.mp}}</span>
+			  </div>
+
+			  <div class="card-footer">
+				<a href="{% url 'productdetails' cfdata.id %}"><button class="btn btn-sm btn-primary add-to-cart" type="submit"><i class="fa fa-shopping-cart"></i></button></a>	
+				<button class="btn btn-sm btn-danger add-wishlist" data-product=""><i class="fa fa-heart"></i></button>
+				<span class="float-right">
+			  		4.5/5
+			  	<i class="fa fa-star text-warning"></i>
+			  	</span>
+			  </div>
+			</div>
+		</div>
+            {% endfor %}
+        {% else %}
+        <p class="alert alert-danger text-center">This is Default Data Maybe Not Found Data Filter again</p>
+           {% for alldata in alldata %}
+           <div class="col-sm-6  ">
+            <div class="card shadow">
+              <div class="text-center img">
+              <a href="{% url 'productdetails' alldata.id %}"><img src="{{alldata.img.url}}" class="text-center" alt=""></a>
+            </div>
+      
+              <div class="card-body">
+                <h5 class="card-text"><a href="{% url 'productdetails' alldata.id %}">{{alldata.name}}</a></h5>
+                       <span>$ {{alldata.price}}</span> <span class="float-right">{{alldata.mp}}</span>
+              </div>
+              <div class="card-footer">
+              <a href="{% url 'productdetails' alldata.id %}"><button class="btn btn-sm btn-primary add-to-cart" type="submit"><i class="fa fa-shopping-cart"></i></button></a>	
+              <button class="btn btn-sm btn-danger add-wishlist" data-product=""><i class="fa fa-heart"></i></button>
+              <span class="float-right">
+                  4.5/5
+                <i class="fa fa-star text-warning"></i>
+                </span>
+              </div>
+            </div>
+          </div>
+           {% endfor %}
+        {% endif %}
+         
+       </div>
+
+
+       
+       </div>
+    
+     </div>
+    </div>
+   </div>
+
+{% endblock content %}
