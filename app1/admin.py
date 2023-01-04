@@ -16,7 +16,7 @@ class CustomerAdmin(admin.ModelAdmin):
 
 @admin.register(PlaceOrder)
 class PlaceOrderAdmin(admin.ModelAdmin):
-    list_display=['id','user','customer','product','quantity','order_date','status']
+    list_display=['id','user','customer','product','quantity','order_date','productStatus']
 
 
 

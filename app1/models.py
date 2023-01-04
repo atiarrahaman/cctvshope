@@ -81,15 +81,14 @@ class Customer(models.Model):
         return self.name
   
 
-Status={
-    ('accepted','accepted'),
-    ('packed','packed'),
-    ('on the way','on the way'),
-   ( 'delivered ','delivered'),
-   ( 'cancel ','cancel')
 
+productstatus={
+     ('accepted','accepted'),
+     ('packed','packed'),
+     ('on the way','on the way'),
+     ( 'delivered ','delivered'),
+     ( 'cancel ','cancel')
 }
-
 
 
 class PlaceOrder(models.Model):
@@ -98,7 +97,8 @@ class PlaceOrder(models.Model):
     product=models.ForeignKey(CcTvProduct, on_delete=models.CASCADE)
     quantity=models.PositiveIntegerField(default=1)
     order_date= models.DateTimeField(auto_now_add=True)
-    status= models.CharField(choices=Status, max_length=50,default='Pending')
+    productStatus=models.CharField(choices=productstatus,max_length=50,default='Pending')
+    
 
     @property
     def cart_total(self):
