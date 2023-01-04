@@ -85,7 +85,8 @@ Status={
     ('accepted','accepted'),
     ('packed','packed'),
     ('on the way','on the way'),
-   ( 'delivered ','delivered')
+   ( 'delivered ','delivered'),
+   ( 'cancel ','cancel')
 
 }
 
@@ -102,3 +103,12 @@ class PlaceOrder(models.Model):
     @property
     def cart_total(self):
      return self.quantity * self.product.price
+
+
+
+class Review(models.Model):
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
+    product=models.ForeignKey(CcTvProduct, on_delete=models.CASCADE)
+    rating=models.FloatField()
+    review=models.TextField()
+    date= models.DateTimeField( auto_now_add=True )

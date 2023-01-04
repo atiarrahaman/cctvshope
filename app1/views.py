@@ -80,21 +80,13 @@ def Home(request):
 
 def Productdetails(request,id):
     product=CcTvProduct.objects.get(id=id)
+    review=Review.objects.filter(product=product).order_by('-id')
     item_already_have=False
     if request.user.is_authenticated:
         
         item_already_have=Cart.objects.filter(Q(user=request.user) & Q (product=product.id)).exists()
-    context={'product':product,'item_already_have':item_already_have}
+    context={'product':product,'item_already_have':item_already_have,'review':review}
     return render(request,'productdetails.html',context)
-
-@login_required 
-def Product_cart(request):
-    user=request.user
-    product_id=request.GET.get('prod_id')
-    products=CcTvProduct.objects.get(id=product_id)
-    
-    Cart(user=user,product=products).save()
-    return redirect('cart')
 
 @login_required 
 def Product_Buy(request):
@@ -105,6 +97,14 @@ def Product_Buy(request):
     Cart(user=user,product=products).save()
     return redirect('place-order')
 
+@login_required 
+def Product_cart(request):
+    user=request.user
+    product_id=request.GET.get('prod_id')
+    products=CcTvProduct.objects.get(id=product_id)
+    
+    Cart(user=user,product=products).save()
+    return redirect('cart')
 
 
 def Show_cart(request):
@@ -282,4 +282,18 @@ def Catagorydata(request):
 
     context={'catagory':catagory,'cfdata':catagoryfilterdata,'alldata':alldata}
     return render(request,'catagory.html',context)
+
+
+def CustomerReview(request):
+     if request.method == 'GET':
+        review=request.GET.get('review')
+        products=CcTvProduct.objects.get(id=review)
+        r=request.GET.get('rating')
+        t=request.GET.get('texts')
+        user=request.user
+        Review(user=user,product=products,rating=r ,review=t).save()
+        
+        return redirect('productdetails',id=review)
+
+
 

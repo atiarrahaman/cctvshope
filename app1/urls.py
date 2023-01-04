@@ -32,6 +32,8 @@ urlpatterns = [
 
    # Seach
    # path('search',views.Search,name='search'),
+   #customer review
+   path('review',views.CustomerReview , name='review')
     
 
     

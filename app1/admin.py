@@ -4,6 +4,11 @@ from .models import *
 admin.site.register(MegaPixel)
 admin.site.register(Division)
 
+
+@admin.register(Review)
+class ReviewAdmin(admin.ModelAdmin):
+    list_display=['id','user','product','rating',]
+
 @admin.register(Customer)
 class CustomerAdmin(admin.ModelAdmin):
     list_display=['id','user','name','distric','division']
