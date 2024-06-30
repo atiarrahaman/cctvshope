@@ -26,6 +26,8 @@ SECRET_KEY = 'django-insecure-&j5ev0onktxx-nn*08ogw)55n(z3aniz)@36ci(+rxqa7e*4)8
 DEBUG = True
 
 ALLOWED_HOSTS = ['cctvshope.onrender.com']
+CSRF_TRUSTED_ORIGINS = [
+    'https://cctvshope.onrender.com', 'https://*.127.0.0.1']
 SECURE_CROSS_ORIGIN_OPENER_POLICY='same-origin-allow'
 
 
