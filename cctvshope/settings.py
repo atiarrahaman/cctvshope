@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-&j5ev0onktxx-nn*08ogw)55n(z3aniz)@36ci(+rxqa7e*4)8
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['cctvshope.onrender.com']
 SECURE_CROSS_ORIGIN_OPENER_POLICY='same-origin-allow'
 
 
